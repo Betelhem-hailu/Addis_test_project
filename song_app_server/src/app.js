@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(bodyParser.json());
 const corsOptions = {
-  origin: "http://localhost:3005",
+  origin: ["http://localhost:3000", "http://localhost:5173"],
   credentials: true,
 };
 app.use(cors(corsOptions));
