@@ -13,13 +13,25 @@ exports.createSong = async (req, res) => {
 
 
 // Get all songs
+// exports.getSongs = async (req, res) => {
+//     try {
+//         const songs = await Song.find();
+//         res.status(200).send(songs);
+//     } catch (error) {
+//         res.status(500).send(error);
+//     }
+// };
 exports.getSongs = async (req, res) => {
-    try {
-        const songs = await Song.find();
-        res.status(200).send(songs);
-    } catch (error) {
-        res.status(500).send(error);
-    }
+  try {
+    const { genre, album } = req.query;
+    const filter = {};
+    if (genre) filter.genre = genre;
+    if (album) filter.album = album;
+    const songs = await Song.find(filter);
+    res.json(songs);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // Update a song
@@ -49,40 +61,6 @@ exports.deleteSong = async (req, res) => {
 };
 
 // Get statistics
-// exports.getStatistics = async (req, res) => {
-//     try {
-//         const totalSongs = await Song.countDocuments();
-//         const totalArtists = await Song.distinct('artist').count();
-//         const totalAlbums = await Song.distinct('album').count();
-//         const totalGenres = await Song.distinct('genre').count();
-
-//         const songsByGenre = await Song.aggregate([
-//             { $group: { _id: "$genre", count: { $sum: 1 } } }
-//         ]);
-
-//         const songsByArtist = await Song.aggregate([
-//             { $group: { _id: "$artist", songs: { $sum: 1 }, albums: { $addToSet: "$album" } } },
-//             { $project: { _id: 1, songs: 1, albums: { $size: "$albums" } } }
-//         ]);
-
-//         const songsByAlbum = await Song.aggregate([
-//             { $group: { _id: "$album", count: { $sum: 1 } } }
-//         ]);
-
-//         res.status(200).send({
-//             totalSongs,
-//             totalArtists,
-//             totalAlbums,
-//             totalGenres,
-//             songsByGenre,
-//             songsByArtist,
-//             songsByAlbum
-//         });
-//     } catch (error) {
-//         console.log(error)
-//         res.status(500).send(error);
-//     }
-// };
 
 exports.getStatistics = async (req, res) => {
     try {

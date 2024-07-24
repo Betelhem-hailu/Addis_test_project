@@ -16,9 +16,12 @@ import {
 } from '../slices/songSlice';
 // import { Song } from '../../types/songTypes';
 
-function* fetchSongs() {
+function* fetchSongs(action: ReturnType<typeof fetchSongsRequest>) {
   try {
-    const response = yield call(axios.get, 'http://localhost:8000/song_app/songs');
+    const { genre, album } = action.payload;
+    const response = yield call(axios.get, 'http://localhost:8000/song_app/songs', {
+      params: { genre, album },
+    });
     yield put(fetchSongsSuccess(response.data));
   } catch (error) {
     yield put(fetchSongsFailure(error.message));
@@ -33,6 +36,7 @@ function* addNewSong(action: ReturnType<typeof addSong>) {
   try {
     const response = yield call(axios.post, 'http://localhost:8000/song_app/songs', action.payload);
     yield put(addSongSuccess(response.data));
+    yield put(fetchSongsRequest({ genre: '', album: '' })); 
   } catch (error) {
     yield put(addSongFailure(error.message));
   }
