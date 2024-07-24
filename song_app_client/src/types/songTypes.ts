@@ -12,3 +12,8 @@ export interface Song {
     album: string;
     genre: string;
   }
+
+  export interface FetchSongsRequestPayload {
+    genre?: string;
+    album?: string;
+  }

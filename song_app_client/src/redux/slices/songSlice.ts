@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Song, SongNew } from "../../types/songTypes";
+import { Song } from "../../types/songTypes";
 
 export interface SongState {
   songs: Song[];
@@ -36,7 +36,6 @@ const songSlice = createSlice({
     },
     addSongSuccess: (state, action: PayloadAction<Song[]>) => {
       state.loading = false;
-      // state.songs = action.payload;
     },
     addSongFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -50,7 +49,6 @@ const songSlice = createSlice({
     },
     updateSongSuccess: (state, action: PayloadAction<Song[]>) => {
       state.loading = false;
-      // state.songs = action.payload;
     },
     updateSongFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
