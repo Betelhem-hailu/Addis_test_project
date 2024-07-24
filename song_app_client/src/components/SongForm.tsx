@@ -5,7 +5,7 @@ import { Song, SongNew } from "../types/songTypes";
 import styled from "@emotion/styled";
 
 interface SongFormProps {
-  song: Song;
+  song: Song | null;
   onClose: () => void; // Function to call when closing the form
 }
 
