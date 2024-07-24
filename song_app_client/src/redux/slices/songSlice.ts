@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Song, SongNew } from "../../types/songTypes";
+import { Song } from "../../types/songTypes";
 
 export interface SongState {
   songs: Song[];
@@ -19,7 +19,7 @@ const songSlice = createSlice({
   name: "songs",
   initialState,
   reducers: {
-    fetchSongsRequest(state) {
+    fetchSongsRequest(state, action: PayloadAction<{ genre?: string; album?: string }>) {
       state.loading = true;
       state.error = null;
     },
@@ -31,7 +31,7 @@ const songSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    addSong: (state, action: PayloadAction<SongNew>) => {
+    addSong: (state, action: PayloadAction<Song>) => {
       state.songs.push(action.payload);
     },
     addSongSuccess: (state) => {

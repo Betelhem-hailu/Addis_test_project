@@ -5,7 +5,7 @@ import { Song, SongNew } from "../types/songTypes";
 import styled from "@emotion/styled";
 
 interface SongFormProps {
-  song: SongNew | null;
+  song: Song;
   onClose: () => void; // Function to call when closing the form
 }
 
@@ -104,29 +104,35 @@ const SongForm: React.FC<SongFormProps> = ({ song, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+  
+    // Define newSong without _id
     const newSong: SongNew = {
       title,
       artist,
       album,
       genre,
     };
-
-    if (song) {
+  
+  
+    if (song && '_id' in song) {
       const updatedSong: Song = {
-        _id: song._id, // Ensure song is not null before accessing _id
+        _id: song._id,
         ...newSong,
       };
+  
       dispatch(updateSong(updatedSong));
     } else {
       dispatch(addSong(newSong));
     }
-    
+  
+    // Reset form fields
     setTitle("");
     setArtist("");
     setAlbum("");
     setGenre("");
     onClose();
   };
+  
 
   useEffect(() => {
     // Focus on the input field corresponding to the changed state
