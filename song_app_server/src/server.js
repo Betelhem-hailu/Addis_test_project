@@ -7,7 +7,7 @@ app.get("/", (req, res) => {
     res.send("Here is Backend...");
   });
 
-  app.use('/song_app', songRoutes);
+  app.use(songRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
