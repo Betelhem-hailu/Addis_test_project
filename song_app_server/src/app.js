@@ -6,11 +6,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 app.use(bodyParser.json());
-const corsOptions = {
-  origin: ["http://localhost:5173", "https://beatmusic-posmymiev-betelhem-hailus-projects.vercel.app/"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 (async () => {
   try {
